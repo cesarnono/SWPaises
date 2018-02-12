@@ -14,6 +14,7 @@ import com.dev.paises.repositorio.PaisRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -108,4 +109,49 @@ public class RestApiApp {
         return ciudadRepository.save(ciudad); 
     }
     
+    @CrossOrigin
+    @PostMapping("/actualizarpais")
+    public Pais actualizarPais(@RequestBody Pais pais){
+       Pais paisUpdate  = paisRepository.findOne(pais.getId());
+       paisUpdate.setNombre(pais.getNombre());
+       return paisRepository.save(paisUpdate);      
+    }
+    
+    @Transactional
+    @CrossOrigin
+    @PostMapping("/eliminarpais")
+    public void eliminarPais(@RequestBody Pais pais){      
+       paisRepository.delete(pais.getId());
+    }
+    
+    @CrossOrigin
+    @PostMapping("/actualizardepartamento")
+    public Departamento actualizarDepartamento (@RequestBody Departamento departamento){ 
+        Departamento departamentoUpdate = departamentoRepository.findOne(departamento.getId());
+        departamentoUpdate.setNombre(departamento.getNombre());
+        return departamentoRepository.save(departamentoUpdate);  
+                
+    }
+    
+    @Transactional
+    @CrossOrigin
+    @PostMapping("/eliminardepartamento")
+    public void eliminarDepartamento(@RequestBody Departamento departamento){      
+       departamentoRepository.delete(departamento.getId());
+    }
+    
+    @CrossOrigin
+    @PostMapping("/actualizarciudad")
+    public Ciudad actualizarCiudad (@RequestBody Ciudad ciudad){ 
+        Ciudad ciudadUpdate = ciudadRepository.findOne(ciudad.getId());
+        ciudadUpdate.setNombre(ciudad.getNombre());
+        return ciudadRepository.save(ciudadUpdate);  
+                
+    }
+    @Transactional
+    @CrossOrigin
+    @PostMapping("/eliminarciudad")
+    public void eliminarCiudad(@RequestBody Ciudad ciudad){      
+       ciudadRepository.delete(ciudad.getId());  
+    }
 }
